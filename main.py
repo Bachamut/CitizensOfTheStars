@@ -18,6 +18,6 @@ while running:
             running = False
 
     # screen background color (RBG)
-    screen.fill((50, 80, 150))
+    screen.fill((50, 80, 000))
 
     pygame.display.update()
