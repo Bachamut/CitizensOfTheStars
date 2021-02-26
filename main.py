@@ -37,6 +37,7 @@ while running:
 
     # checking pressed keys
     keys = pygame.key.get_pressed()
+    # player ship movement
     if keys[pygame.K_LEFT]:
         playerX_vector += -0.0002
     if keys[pygame.K_RIGHT]:
@@ -45,6 +46,7 @@ while running:
         playerY_vector += -0.0002
     if keys[pygame.K_DOWN]:
         playerY_vector += 0.0002
+    # stop mechanics
     if decoupled == active:
         if keys[pygame.K_LEFT] == False and playerX_vector <= 0:
             playerX_vector += 0.0001
@@ -58,7 +60,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
+        # changing decouple status for stop mechanics
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 active = True
