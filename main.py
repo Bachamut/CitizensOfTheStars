@@ -19,8 +19,8 @@ playerY = 510
 playerX_vector = 0
 playerY_vector = 0
 
-
-# clock = 0
+decoupled = True
+active = False
 
 
 def player(x, y):
@@ -45,23 +45,29 @@ while running:
         playerY_vector += -0.0002
     if keys[pygame.K_DOWN]:
         playerY_vector += 0.0002
-
-    if keys[pygame.K_LEFT] == False and playerX_vector <= 0:
-        playerX_vector += 0.0001
-    if keys[pygame.K_RIGHT] == False and playerX_vector >= 0:
-        playerX_vector -= 0.0001
-    if keys[pygame.K_UP] == False and playerY_vector <= 0:
-        playerY_vector += 0.0001
-    if keys[pygame.K_DOWN] == False and playerY_vector >= 0:
-        playerY_vector -= 0.0001
+    if decoupled == active:
+        if keys[pygame.K_LEFT] == False and playerX_vector <= 0:
+            playerX_vector += 0.0001
+        if keys[pygame.K_RIGHT] == False and playerX_vector >= 0:
+            playerX_vector -= 0.0001
+        if keys[pygame.K_UP] == False and playerY_vector <= 0:
+            playerY_vector += 0.0001
+        if keys[pygame.K_DOWN] == False and playerY_vector >= 0:
+            playerY_vector -= 0.0001
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                active = True
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_SPACE:
+                active = False
+
         # check which key was pressed
         # if event.type == pygame.KEYDOWN:
-        #     if keys[pygame.K_LEFT]:
         #     if event.key == pygame.K_LEFT:
         #         playerX_vector += -0.02
         #     if event.key == pygame.K_RIGHT:
