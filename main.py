@@ -1,11 +1,21 @@
 import pygame
+
 import random
+
+from settings import Settings
+
+import game_functions as gf
+
+FPS = 60
+fpsClock = pygame.time.Clock()
 
 # Initialize of pygame
 pygame.init()
 
+settings = Settings()
+
 # Create a screen
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
 
 # Title and icon
 pygame.display.set_caption("CitizensOfTheStars")
@@ -20,8 +30,8 @@ speed_m = 3
 # Player
 playerImg = pygame.image.load("spaceship.png")
 
-playerX = 368
-playerY = 510
+playerX = settings.screen_height * 0.61
+playerY = settings.screen_width * 0.64
 playerX_vector = 0
 playerY_vector = 0
 
@@ -92,51 +102,37 @@ while running:
         if keys[pygame.K_DOWN] == False and playerY_vector >= 0:
             playerY_vector -= speed_m * 0.00015
 
-    for event in pygame.event.get():
-        # loop exit
-        if event.type == pygame.QUIT:
-            running = False
-        if event.type == pygame.KEYDOWN:
-            # fire_bullet mechanics
-            if event.key == pygame.K_w:
-                if bullet_state == "ready":
-                    bulletX = playerX
-                    fire_bullet(bulletX, bulletY)
-            # changing decouple status for stop mechanics
-            if event.key == pygame.K_SPACE:
-                active = True
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_SPACE:
-                active = False
+    gf.check_events()
 
     # Boundary of X axis movement for player
     if playerX < 0:
         playerX = 0
         playerX_vector = 0
-    elif playerX > 736:
-        playerX = 736
+    elif playerX > settings.screen_width - 64:
+        playerX = settings.screen_width - 64
         playerX_vector = 0
     # Boundary of Y axis movement for player
     if playerY < 0:
         playerY = 0
         playerY_vector = 0
-    elif playerY > 536:
-        playerY = 536
+    elif playerY > settings.screen_height - 64:
+        playerY = settings.screen_height - 64
         playerY_vector = 0
+
 
     # Boundary of X axis movement for enemy
     if enemyX < 0:
         enemyX = 0
         enemyX_vector = - enemyX_vector
-    elif enemyX > 736:
-        enemyX = 736
+    elif enemyX > settings.screen_width - 64:
+        enemyX = settings.screen_width - 64
         enemyX_vector = - enemyX_vector
     # Boundary of Y axis movement for enemy
     if enemyY < 0:
         enemyY = 0
         enemyY_vector = 0
-    elif enemyY > 536:
-        enemyY = 536
+    elif enemyY > settings.screen_height - 64:
+        enemyY = settings.screen_height - 64
         enemyY_vector = 0
 
     # Player position update
